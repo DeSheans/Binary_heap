@@ -1,6 +1,8 @@
 package heap
 
-import "cmp"
+import (
+	"cmp"
+)
 
 // Heap is a data structure for working with a min binary heap.
 type Heap[T any] struct {
@@ -50,25 +52,26 @@ func (h *Heap[T]) Remove(val T) bool {
 }
 
 // Pop removes and returns the minimum element (root) from the heap. It panics if the heap is empty.
-func (h *Heap[T]) Pop() T {
+func (h *Heap[T]) Pop() (ok bool, result T) {
 	if len(h.heap) == 0 {
-		panic("Heap is empty.")
+		return false, result
 	}
 	size := len(h.heap) - 1
-	result := h.heap[0]
+	result = h.heap[0]
 	h.heap[0], h.heap[size] = h.heap[size], result
 	h.heap = h.heap[:size]
 	size--
 	h.heapify(0, size)
-	return result
+	return true, result
 }
 
 // Peek returns the minimum element (root) from the heap without removing it. It panics if the heap is empty.
-func (h *Heap[T]) Peek() T {
+func (h *Heap[T]) Peek() (ok bool, result T) {
 	if len(h.heap) == 0 {
-		panic("Heap is empty.")
+		return false, result
 	}
-	return h.heap[0]
+	result = h.heap[0]
+	return true, result
 }
 
 // Sort returns a sorted slice of elements in ascending order using the heap. After sorting, the original heap is restored to maintain the heap property for future operations.
