@@ -51,6 +51,11 @@ func (h *Heap[T]) Remove(val T) bool {
 	return false
 }
 
+// IsEmpty returns false if the heap is empty; otherwise true.
+func (h *Heap[T]) IsEmpty() bool {
+	return len(h.heap) == 0
+}
+
 // Pop removes and returns the minimum element (root) from the heap. It panics if the heap is empty.
 func (h *Heap[T]) Pop() (ok bool, result T) {
 	if len(h.heap) == 0 {
